@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
     flex: 1,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     alignItems: "center",
   },
   searchField: {
