@@ -15,6 +15,8 @@ import Colors from "@/themes/Color";
 import { Link, useNavigation } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import useBasketStore from "@/store/basketStore";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const DetailsPage = () => {
   const navigation = useNavigation();
@@ -52,6 +54,10 @@ const DetailsPage = () => {
       opacity.value = withTiming(0);
     }
   };
+
+  const { items, total, products } = useBasketStore();
+
+  console.log("products", products);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -136,7 +142,7 @@ const DetailsPage = () => {
           />
         </View>
       </ParallaxScrollView>
-
+      {/* Sticky segments */}
       <Animated.View style={[styles.stickySegments, animatedStyles]}>
         <View style={styles.segmentsShadow}>
           <ScrollView
@@ -160,6 +166,21 @@ const DetailsPage = () => {
           </ScrollView>
         </View>
       </Animated.View>
+
+      {/* Footer Basket */}
+      {items > 0 && (
+        <View style={styles.footer}>
+          <SafeAreaView edges={["bottom"]} style={{ backgroundColor: "#fff" }}>
+            <Link href="/basket" asChild>
+              <TouchableOpacity style={styles.fullButton}>
+                <Text style={styles.basket}>{items}</Text>
+                <Text style={styles.footerText}>View Basket</Text>
+                <Text style={styles.basketTotal}>${total}</Text>
+              </TouchableOpacity>
+            </Link>
+          </SafeAreaView>
+        </View>
+      )}
     </>
   );
 };
